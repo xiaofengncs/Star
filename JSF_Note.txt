@@ -1,0 +1,228 @@
+http://blog.csdn.net/sunitjy/article/details/6264711
+================ basics
+	jstl-api.jar\jstl-impl.jar\javax.faces.jar
+	faces-config.xml
+	web.xml
+		<servlet>
+			<servlet-name>Faces Servlet</servlet-name>
+			<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		</servlet>
+		<servlet-mapping>
+			<servlet-name>Faces Servlet</servlet-name>
+			<url-pattern>*.jsf</url-pattern>
+		</servlet-mapping>
+			
+	@ManagedBean
+	@ManagedBean(name="**")
+	@SessionScoped
+	
+	<h:form>
+	<h:inputText> 
+	<h:inputSecret> 密码输入框
+	<h:commandButton>
+	<h:panelGrid columns="2" styleClass="formTable">  生成两列的table
+
+	Context path: 					#{request.contextPath}
+	Value of JSESSIONID cookie: 	#{cookie.JSESSIONID.value}
+	The "test" request parameter: 	#{param.test}
+	ser-Agent request header:		#{header["User-Agent"]}
+	Context中的Message				#{facesContext.messageList[0].summary}
+	
+	upplying Arguments to EL Methods 	#{testBean2.randomNumber(500)}
+	
+	
+================ properties
+	faces-config.xml
+		<application>
+			<resource-bundle>
+			  <base-name>messages1</base-name>
+			  <var>msgs1</var>
+			</resource-bundle>
+		</application>
+			--> 使classpath下的messages1.properties映射成 msgs1
+				在*.xhtml中可直接使用#{msgs1.successTitle}
+				
+	.properties文件中占位符：prompt=Enter {0} ,使用<h:outputFormat><f:param>
+		-->	<h:outputFormat value="#{msgs2.prompt}">
+			  <f:param value="#{msgs2.firstName}"/>
+			</h:outputFormat>
+	
+	.xhtml中<f:view locale="#{facesContext.externalContext.requestLocale}">
+		-->国际化 i18n
+		
+	
+
+================ validation
+	<h:messages styleClass="error" />
+		-->FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage("UserID required"));
+	
+	<h:inputText value="#{bidBean2.bidAmount}"
+					required="true"
+					requiredMessage="You must enter an amount"
+					converterMessage="Amount must be a number"  (格式转化错误)
+					id="amount"/>
+	<h:message for="amount" styleClass="error"/>	
+		
+	<h:inputText value="#{bidBean2.userID}" 
+               required="true"
+               requiredMessage="You must enter a user ID"
+               validatorMessage="ID must be 5 or 6 chars"
+               id="userID">
+		<f:validateLength minimum="5" maximum="6"/>
+	</h:inputText>
+	<h:message for="userID" styleClass="error"/>		
+		-->for="amount",表示指定为id="amount"的错误消息，提交表单时，自动验证
+			validatorMessage根据后面的<f:validateLength>,类似的validate还有：
+				<f:validateDoubleRange minimum="0.10"/>
+				<f:validateLongRange minimum="15"/>
+	<h:inputText value="#{bidBean2.userID}" 
+		validator="#{bidBean2.validateBidAmount}"/>
+		-->validator，表示调用validateBidAmount方法
+		
+	#{facesContext.messageList[0].summary}
+	<ui:repeat var="message" value="#{facesContext.messageList}">
+		#{message.summary}
+	</ui:repeat>
+		-->在页面直接取上下文的错误信息的方法
+		
+================ event-handling
+	
+	<h:commandButton value="#{msgs.normalFont}" 
+		 actionListener="#{formSettings.setNormalSize}"
+		 immediate="true"/>
+		 -->调用formSettings的setNormalSize(ActionEvent event)方法
+	
+	<h:body styleClass="#{formSettings.bodyStyleClass}">
+		-->调用getBodyStyleClass()，返回值为<body class="normalSize">
+		
+	<f:view locale="#{formSettings.locale}"></f:view>
+		-->根据formSettings.locale的值改变页面的locale，
+			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+			根据property文件改变页面本地化信息
+			
+	<h:selectOneRadio value="#{formSettings.language}"
+                  onclick="submit()"
+                  immediate="true">
+	  <f:selectItems value="#{formSettings.languages}"/>
+	</h:selectOneRadio>
+		-->可以通过JS时间提交表单信息
+		
+		
+
+================ ajax
+	<h:commandButton value="Show Number" 
+                   action="#{numberGenerator.randomize}">
+		<f:ajax render="numField1"/> 
+	</h:commandButton>
+	<h2><h:outputText value="#{numberGenerator.number}" id="numField1"/></h2>
+		-->numberGenerator.randomize处理的结果，只影响此Form中id="numField1"的表单项
+	
+	<h:commandButton value="Show Number" 
+                   action="#{numberGenerator.randomize}">
+		<f:ajax execute="rangeField"
+				render="numField3"/>
+	</h:commandButton><br/>
+		-->提交id="rangeField"表单，结果表现与id="numField3"中
+		
+	<f:ajax execute="@form"   
+            render="ajaxMessage1"/>
+		-->提交当前表单数据，结果表现与id="ajaxMessage1"中
+		
+	State:
+	<h:selectOneMenu value="#{locationBean.state}">
+		<f:selectItems value="#{locationBean.states}"/>
+		<f:ajax render="cityList"/>
+	</h:selectOneMenu>
+	<br/>City:
+	<h:selectOneMenu value="#{locationBean.city}"
+					   disabled="#{locationBean.cityListDisabled}"
+					   id="cityList">
+		<f:selectItems value="#{locationBean.cities}"/>
+		<f:ajax render="population"/>
+	</h:selectOneMenu>
+		--> 二级菜单
+	
+	<f:ajax event="keyup"
+            render="cField kField"/>
+		-->注册keyup事件，结果表现于id分别为"cField""kField"中
+		
+	<f:ajax execute="@form"   
+            render="ajaxMessage2"
+            onevent="showWorkingIndicator"/>
+		-->提交时，触发onevent事件(showWorkingIndicator为JS中的函数)
+	
+	
+================ looping	
+	<h:dataTable var="programmer" 
+             value="#{company2.programmers}"
+             border="1"
+             styleClass="mainTable"
+             headerClass="heading"
+             rowClasses="evenRow,oddRow">
+		<h:column>
+			<f:facet name="header">First Name</f:facet>
+			#{programmer.firstName}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Last Name</f:facet>
+			#{programmer.lastName}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Experience Level</f:facet>
+			#{programmer.level}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Languages</f:facet>
+			#{programmer.languageList1}
+		</h:column>
+	</h:dataTable>
+		-->h:dataTable标签自动生成表格。var为value中的每一项
+			f:facet with name = "header"(列名), "caption"(表头), "footer", etc.
+			styleClass, captionClass, headerClass, footerClass, rowClasses, columnClasses.
+	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	<ui:repeat var="language" value="#{person1.languages}">
+      <li>#{language}</li>
+    </ui:repeat>
+		-->相当于For循环
+	
+	<ui:repeat var="language" value="#{programmer.languages}"
+             varStatus="status">
+		<h:outputText value=" and " rendered="#{status.last}"/>
+			#{language}
+		<h:outputText value=","  rendered="#{!status.last}"/>
+	</ui:repeat>
+		-->rendered处作出判断，当ture时显示，相当于IF判断
+			rendered中应为Boolean表达式
+			Conditional output
+				#{someCondition ? simpleVal1 : simpleVal2}
+				<h:outputText rendered="…" …/>
+				<ui:fragment rendered="…">…</ui:fragment>
+
+		
+	<ui:repeat var="language" value="#{programmer.languages}"
+           varStatus="status">
+	  <ui:fragment rendered="#{status.even}">
+		<li class="evenLang">#{language}</li>
+	  </ui:fragment>
+	  <ui:fragment rendered="#{!status.even}">
+		<li class="oddLang">#{language}</li>
+	  </ui:fragment>
+	</ui:repeat>
+		-->status.even，就是奇数项时。
+			
+	
+================ view-params
+	<f:metadata>
+	  <f:viewParam name="fg" value="#{colorPreferences.foreground}"/>
+	  <f:viewParam name="bg" value="#{colorPreferences.background}"/>
+	</f:metadata>
+		-->lookup2.jsf中定义viewParam的name
+	<h:link outcome="lookup2?fg=black&amp;bg=white" value="Light"/>
+		-->通过访问lookup2.jsf?fg=black&amp;bg=white设置viewParam的值到lookup2中
+	
+	
+	
+	
+	

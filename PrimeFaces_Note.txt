@@ -1,0 +1,20 @@
+
+http://www.coreservlets.com/JSF-Tutorial/primefaces/#Overview
+
+=======================primefaces-intro
+	xmlns:p="http://primefaces.org/ui
+	简单样式：
+	<p:fieldset legend="Spinner &amp; Calendar (No Server Behavior)"></p:fieldset>
+	<p:spinner value="#{testBean.number}"/>数字输入框
+	<p:calendar value="#{testBean.date}"/>日期选择框
+	<p:commandButton action="#{testBean.doAction}" value="Submit" ajax="false" />
+	
+	
+
+	
+	
+
+	
+	
+http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStartedBeforeYouBegin.html
+http://blog.chinaunix.net/uid-26359455-id-3223565.html
