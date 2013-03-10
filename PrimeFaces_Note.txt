@@ -18,3 +18,5 @@ http://www.coreservlets.com/JSF-Tutorial/primefaces/#Overview
 	
 http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStartedBeforeYouBegin.html
 http://blog.chinaunix.net/uid-26359455-id-3223565.html
+http://www.worldhello.net/gotgithub/index.html
+http://www.microsoft.com/typography/cleartype/tuner/Step1.aspx
