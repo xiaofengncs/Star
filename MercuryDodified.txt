@@ -1,0 +1,16 @@
+﻿====修改====
+
+----MercuryUserServiceImpl
+		private List<MercuryUserVO> convertEntityListToVOList(List<EsMercuryUserEntity> userEntities){
+		if (userEntities == null) {
+			return null;
+		}
+		
+----addUser.xhtml
+		function ajaxAccess(data){
+			 if(data.status == "begin"){
+				   $.blockUI({ message: '<div class='loading_box'>Please waiting...</div>'});
+				   event.preventDefault();
+				   event.stopPropagation();
+				  }
+				}
