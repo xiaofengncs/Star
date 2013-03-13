@@ -21,3 +21,15 @@ http://blog.chinaunix.net/uid-26359455-id-3223565.html
 http://www.worldhello.net/gotgithub/index.html
 http://www.microsoft.com/typography/cleartype/tuner/Step1.aspx
 http://ostermiller.org/utils/download.html
+
+写了一个热键的函数
+try:
+
+<body leftmargin="0" topmargin="0" Onkeydown="keydownevent();" >
+
+<script>
+	function keydownevent() {
+		if (window.event.keyCode == 13) 
+			formname.submit();
+		};
+</script> 
