@@ -1,4 +1,6 @@
 http://blog.csdn.net/sunitjy/article/details/6264711
+http://blog.csdn.net/wangyang_software/article/details/6057998
+
 ================ basics
 	jstl-api.jar\jstl-impl.jar\javax.faces.jar
 	faces-config.xml
@@ -223,6 +225,42 @@ http://blog.csdn.net/sunitjy/article/details/6264711
 		-->通过访问lookup2.jsf?fg=black&amp;bg=white设置viewParam的值到lookup2中
 	
 	
-	
+================ 重定向
+	1． 通过约定进行导航
+		可以利用 JSF 2 的导航约定：JSF 将 .xhtml 添加到按钮操作的末尾并加载该文件。
+		<h:commandButton id="loginButton"
+			value="#{msgs.loginButtonText}"
+			action="places"/>
+	2． 使用绝对路径的导航
+		<h:commandButton id="loginButton"
+			value="#{msgs.loginButtonText}"
+			action="/pages/places"/>
+	3． 通过重定向进行导航
+		默认情况下，JSF 将从一个 XHTML 页面转至另一个 XHTML 页面，但是通过指定 faces-redirect 参数可以重定向
+		 <h:commandButton id="loginButton"
+			value="#{msgs.loginButtonText}"
+			action="places?faces-redirect=true "/> 
+			
+
+================ 注解
+
+	@ManagedBean
+		以托管 bean 的形式注册一个类实例，然后将其放入到使用其中一个 @...Scoped 注释指定的范围内。如果没有指定任何范围，JSF 将把此 bean 放入请求范围，如果没有指定任何名称，JSF 将把类名的第一个字母转换为小写，形成一个托管 bean 名称；例如，如果类名为 UserBean ，那么 JSF 将创建一个托管 bean ，其名为 userBean 。eager 和 name 属性都是可选的。
+		注释必须结合使用一个实现零参数构造器的 Java 类。
+	@ManagedProperty
+		为托管 bean 设置一个属性。注释必须放在类成员变量的声明之前。name 属性指定特性的名称，默认情况下为成员变量的名称。value 属性是特性的值，可以是一个字符串，也可以是一个 JSF 表达式，比如 #{...} 。
+	@ApplicationScoped
+		在应用程序范围内存储托管 bean 。
+	@SessionScoped
+		在会话范围内存储托管 bean 。
+	@RequestScoped
+		在请求范围内存储托管 bean 。
+	@ViewScoped
+		在视图范围内存储托管 bean 。
+	@NoneScoped
+		将托管 bean 指定为没有范围。无范围的托管 bean 在被其他 bean 引用时比较有用。
+	@CustomScoped
+		在定制范围内存储托管 bean 。
+		定制范围就是指可以由页面创建者访问的地图。可以通过编程的方式控制定制范围内的 bean 的可视性和生命周期。value 属性指向一个地图。 
 	
 	
