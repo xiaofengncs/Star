@@ -240,7 +240,11 @@ http://blog.csdn.net/wangyang_software/article/details/6057998
 		 <h:commandButton id="loginButton"
 			value="#{msgs.loginButtonText}"
 			action="places?faces-redirect=true "/> 
-			
+	4.	 FacesContext context = FacesContext.getCurrentInstance();
+		 javax.faces.application.Application app = context.getApplication();
+		 UIViewRoot view = app.getViewHandler().createView(context, szPage);
+		 context.setViewRoot(view);
+		 context.renderResponse();		
 
 ================ 注解
 
