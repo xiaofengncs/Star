@@ -25,3 +25,40 @@ check登录界面的输入
 这个你需要用js写一个输入性验证
 取得username，password后，需要再后台check，如果不存在直接条回登陆界面，并且提示错误信息
 
+-----Google Analytics
+http://www.cnblogs.com/joer/archive/2010/09/16/1841245.html
+
+<script> // Change UA-XXXXX-X to be your site's ID
+    var _gaq=[["_setAccount","UA-8449654-63"],["_trackPageview"]];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+    g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";
+    s.parentNode.insertBefore(g,s)}(document,"script"));
+</script>
+<script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', '<%= IPhoneConstants.GA_CODE%>']);  
+          _gaq.push(['_trackPageview','/ruby/appt_closed_page'])
+          
+          _gaq.push(['_addOrganic', 'search.maxonline.com.sg', 'search']);
+          _gaq.push(['_addOrganic', 'fastbrowsersearch.com', 'q']);
+          _gaq.push(['_addOrganic', 'search.babylon.com', 'search']);
+          _gaq.push(['_addOrganic', 'search.maxonline.com.sg', 'q']);
+          _gaq.push(['_addOrganic', 'search.conduit.com', 'q']);
+          _gaq.push(['_addOrganic', 'search.esnips.com', 'searchQurey']);
+          _gaq.push(['_addOrganic', 'search.freecause.com', 'p']);
+          _gaq.push(['_addOrganic', 'search.goo.ne.jp', 'MT']);
+          _gaq.push(['_addOrganic', 'search.hp.my.aol.sg', 'query']);
+          _gaq.push(['_addOrganic', 'search.hiyo.com', 'q']);
+          _gaq.push(['_addOrganic', 'search.iminent.com', 'q']);
+          _gaq.push(['_addOrganic', 'search.mywebsearch.com', 'searchfor']);
+          _gaq.push(['_addOrganic', 'search.sweetim.com', 'q']);
+          _gaq.push(['_addOrganic', 'search.winamp.com', 'q']);
+          _gaq.push(['_addOrganic', 'search-results.com', 'q']);
+          _gaq.push(['_addOrganic', 'websearch.rakuten.co.jp', 'qt']);
+
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+</script>
