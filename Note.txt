@@ -1,0 +1,18 @@
+---------->>  javascript CDATA的意义 
+
+CDATA 内部的所有东西都会被解析器忽略。
+假如文本中包含了大量的 "<" 和 "&" 字符 - 就像编程代码中经常出现的情况一样 - 那么这个 XML 元素就可以被定义为一个 CDATA 部分。 
+CDATA 区段开始于 "<![CDATA["，结束于 "]]>"：
+ <script type="text/javascript">
+ <![CDATA[
+	function compare(a,b) {
+		if (a < b)	{alert("a小于b");}
+		else if (a>b) {alert("a大于b");}
+		else {alert("a等于b");}
+	}
+ ]]>
+ </script>
+在上面的例子中，在 CDATA 区段中的所有东西都会被解析器忽略。
+
+
+---------->>  
